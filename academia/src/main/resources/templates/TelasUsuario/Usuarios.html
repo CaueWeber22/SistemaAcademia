@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Usuários</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasUsuarioCss/UsuariosCss.css}"/>         
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Gerenciamento de usuários</p>
+                </div>
+            </div>
+        </div>
+
+        <!--PARTE DE CIMA DA TABELA-->
+        <div class="container mt-4 mb-2">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="container">                  
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <!--FORM DE PESQUISA POR ID-->
+                                <form id="formPesquisa" th:action="@{Usuarios}"  method="post">
+                                    <label for="id-usuario" class="form-label">Pesquisar usuário pelo número da carteirinha:</label>
+                                    <div class="row">
+                                        <div class="col-sm-5">
+                                            <input id="id-usuario" name="id_usuario" class="form-control" type="number" placeholder="Pesquisar...">                                           
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <!--Enviar id digitado para pesquisa-->
+                                            <button type="submit" class="btn btn-primary">Pesquisar</button>
+                                            <!--Limpar pesquisar e passar valor nulo (retornar todos usuários)-->
+                                            <button id="botao-limpar" class="ml-1 btn btn-secondary">Limpar</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="class-sm-4 ml-auto mt-4">
+                                <!--Link para tela de cadastro de novos usuário-->
+                                <a id="link" class="botao" th:href="@{CadastrarUsuario}">Cadastrar novo usuário</a>
+                            </div>
+
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>  
+
+        <!--TABELA-->
+        <div class="container">
+            <div class="row">
+                <div class="div-tabela col-sm-12">
+                    <div class="table-responsive">
+                        <table id="tabela-usuarios" class="table table-striped table-bordered" style="width: 100%;">
+                            <thead>
+                                <tr style="color: rgb(139,0,0)">
+                                    <th>ID carteirinha</th>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Data nascimento</th>
+                                    <th>ID do treino</th>  
+                                    <th>Plano</th> 
+                                    <th>Plano está ativo</th>       
+                                </tr>
+                            </thead>
+                            <tbody id="corpo-tabela">
+                                <!--Dados dos usuários-->
+                                <tr th:each="usuario : ${usuarios}" class="usuario-item" data-id-carteirinha="${usuario.id_carteirinha}">
+                                    <td th:text="${usuario.id_carteirinha}"></td>
+                                    <td th:text="${usuario.nome}"></td>
+                                    <td th:text="${usuario.cpf}"></td>
+                                    <td th:text="${usuario.data_nascimento}"></td>
+                                    <td th:text="${usuario.treino_id}"></td>
+                                    <td>
+                                        <span th:if="${usuario.plano_id == 1}">Mensal</span>
+                                        <span th:if="${usuario.plano_id == 2}">Trimestral</span>
+                                        <span th:if="${usuario.plano_id == 3}">Semestral</span>
+                                        <span th:if="${usuario.plano_id == 4}">Anual</span>
+                                    </td>
+                                    <td>
+                                        <span th:if="${usuario.ativo}">Sim</span>
+                                        <span th:unless="${usuario.ativo}">Não</span>
+                                    </td>
+                                </tr>
+                                <tr th:if="${#lists.isEmpty(usuarios)}">
+                                    <td colspan="7" style="text-align: center;">Nenhum usuário encontrado</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--PARTE DE BAIXO DA TABELA-->
+        <div class=" mt-2 container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="container">                  
+                        <div class="row">
+                            <div class="class-sm-4 mt-4">
+                                <ul id="lista" class="list-unstyled">
+                                    <li><a id="link" class="botao pl-5 pr-5" th:href="@{/TelaInicial}" >Voltar</a></li>
+                                </ul>
+                            </div> 
+                            <div class="class-sm-8 ml-auto mt-4">
+                                <ul id="lista" class="list-unstyled">
+                                    <li><a id="link" class="botao pl-3 pr-3 p-2" th:href="@{/ExclusaoUsuario}" style="color: red">Excluir usuário</a></li>
+                                    <li><a id="link" class="botao pl-3 pr-3 p-2" th:href="@{/AlterarUsuario}">Alterar plano/treino de usuário</a></li>
+                                </ul>
+                            </div>         
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/TelasUsuarioJs/UsuariosJs.js}"></script>
+    </body>
+</html>

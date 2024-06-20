@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Cadastro de treinos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasTreinosCss/CadastroTreinoCss.css}"/>    
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Cadastro de treino</p>
+                </div>
+            </div>
+        </div>
+
+        <!--FORM DE CADASTRO-->
+        <form id="form-cadastro" th:action="@{/CadastroTreino}" th:object="${treino}" method="post">
+            <div class="container teal-bg mt-3" style="margin-bottom: 10vh;">
+                <p id="txt" class="h5">Insira os dados do treino que será cadastrado</p>
+                <hr>
+                <div class="row"> 
+                    <div class="col-sm-7"> 
+                        <!--Digitar nome do treino-->
+                        <div class="mb-3"> 
+                            <label for="nome" class="form-label">Nome:</label> 
+                            <input id="nome" required th:field="*{nome}" class="form-control" type="text"> 
+                        </div> 
+                        <!--Digitar número de divisões do treino-->
+                        <div class="mb-3"> 
+                            <label for="nmrDivisoes" class="form-label">Número de divisões:</label> 
+                            <input id="nmrDivisoes" th:field="*{numero_divisoes}" required class="form-control" type="number">
+                        </div> 
+                        <!--Digitar texto de descrição-->
+                        <div class="mb-3"> 
+                            <label for="txtDescricao" class="form-label">Descrição:</label> 
+                            <textarea id="txtDescricao" required th:field="*{descricao}" class="form-control alturaObs" rows="2"></textarea> 
+                        </div>
+                        <!--Digitar descrição dos dias-->
+                        <div class="mb-3">
+                            <label for="txtDescricaoDias" class="form-label">Descrição dos dias:</label> 
+                            <textarea id="txtDescricaoDias" required th:field="*{descricao_dias}" class="form-control alturaObs" rows="2"></textarea> 
+                            <span id="ex">Ex: "dia 1 - peito, dia 2 - costas..."</span>
+                        </div>
+                        <!--Divs com link e botão-->
+                        <div class="container">
+                            <div class="row">
+                                <!--Link para voltar-->
+                                <div class="col-sm-4 mb-3">
+                                    <a id="link" class="btn btn-primary btn-block" th:href="@{/Treinos}">Voltar</a>
+                                </div>
+                                <div class="col-sm-3"></div>
+                                <!--Botão para abrir modal-->
+                                <div class="col-sm-5 mb-3">
+                                    <button id="abrirModal" type="button" class="btn btn-primary btn-block">Cadastrar</button>
+                                </div>
+                            </div>
+                        </div>   
+                    </div>  
+                </div> 
+            </div>           
+        </form>
+
+        <!--MODAL PARA CADASTRAR TREINO OU CANCELAR-->
+        <div class="modal fade" id="confirmModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de cadastro de treino</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        Tem certeza que deseja cadastrar este treino?
+                    </div>
+                    <!--RODAPÉ-->
+                    <div class="modal-footer">
+                        <!--BOTÃO PARA CANCELAR CADASTRO-->
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <!--BOTÃO PARA ENVIO DO FORM-->
+                        <button id="btnCadastrar" form="form-cadastro" class="btn btn-primary" type="submit">Confirmar</button>                  
+                    </div>
+                </div>
+            </div>
+        </div> 
+        
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/TelasTreinosJs/CadastroTreinoJs.js}"></script>
+
+    </body>
+</html>

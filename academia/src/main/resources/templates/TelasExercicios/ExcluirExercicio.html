@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Excluir exercício</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasExerciciosCss/ExcluirExercicioCss.css}"/>    
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Cadastrar exercícios</p>
+                </div>
+            </div>
+        </div>
+        
+        <!--INPUT PARA PASSAR SHOWMODAL PARA O JS-->
+        <input id="showModalInput" type="hidden" th:value="${showModal}"/>
+
+        <!--FORM DE EXCLUSÃO-->
+        <form id="form-exclusao" th:action="@{/ExcluirExercicio}" method="post">
+            <div class="col-sm-12">
+                <div class="container teal-bg mt-3" style="margin-bottom: 10vh;">
+                    <p id="txt" class="h5">Remova o exercício</p>
+                    <hr>
+                    <div class="row"> 
+                        <div class="col-sm-7">   
+                            <div class="mb-3"> 
+                                <label for="id-exercicio" class="form-label">ID do exercicio que será excluido:</label> 
+                                <input id="id-exercicio" name="id_exercicio" required class="form-control" type="number">
+                            </div> 
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4 mb-3">
+                                        <a id="link" class="btn btn-primary btn-block" th:href="@{/Exercicios}">Voltar</a>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-5 mb-3">
+                                        <input id="btn-excluir" type="submit" required class="btn btn-primary btn-block" value="Remover">
+                                    </div>
+                                </div>
+                            </div>   
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </form> 
+        
+        
+         <!--MODAL PARA CONFIRMAR OU CANCELAR EXCLUSÃO-->
+        <div class="modal fade" id="confirmModal" role="dialog">
+
+            <!--MODAL CASO EXERCÍCIO TENHA SIDO ENCONTRADO-->
+            <div class="modal-dialog" role="document" th:if="${exercicio.nome != null}">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de exclusão</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja excluir este exercício: <span th:text="${exercicio.nome}" style="color: rgb(139, 0, 0);">
+                            </span>?</p>
+                        <p class="mt-1">A ação não poderá ser revertida</p>
+                    </div>
+                    <!--RODAPÉ-->
+                    <!--Form para confirmar exclusão-->
+                    <form id="formExcluirConfirm" th:action="@{/ConfirmExclusaoExercicio}" method="post">
+                        <input type="hidden" id="id-exercucui-confirm" name="id" th:value="${exercicio.id}" class="form-control"/>
+                        <div class="modal-footer">
+                            <!--BOTÃO PARA CANCELAR-->
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <!--BOTÃO PARA ENVIO DO FORM-->
+                            <button id="btnExcluir" class="btn btn-primary" type="submit">Excluir</button>                  
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!--MODAL CASO EXERCÍCIO NÃO TENHA SIDO ENCONTRADO-->
+            <div class="modal-dialog" role="document" th:unless="${exercicio.nome != null}">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Exercício não encontrado</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        <p style="color: rgb(139, 0, 0);">O exercício não foi encontrado</p>          
+                    </div>
+                    <!--RODAPÉ-->                             
+                    <div class="modal-footer">
+                        <a id="link" class="btn btn-primary" th:href="@{/ExcluirExercicio}">Voltar</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+         
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <script th:src="@{/js/TelasExerciciosJs/ExcluirExercicioJs.js}"></script>
+    </body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Excluir Treinos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasTreinosCss/ExcluirTreinoCss.css}"/>    
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Excluir treinos</p>
+                </div>
+            </div>
+        </div>
+        
+        <!--INPUT PARA PASSAR SHOWMODAL PARA O JS-->
+        <input id="showModalInput" type="hidden" th:value="${showModal}"/>
+
+        <!--FORM DE EXCLUSÃO-->
+        <form id="form-exclusao" method="post" th:action="@{ExcluirTreino}">
+            <div class="col-sm-12">
+                <div class="container teal-bg mt-3" style="margin-bottom: 10vh;">
+                    <p id="txt" class="h5">Exclua o treino permanentemente</p>
+                    <hr>
+                    <div class="row"> 
+                        <div class="col-sm-7">   
+                            <div class="mb-3"> 
+                                <label for="id-treino" class="form-label">ID do treino que será excluido:</label> 
+                                <input id="id-treino" name="id_treino" required class="form-control" type="number">
+                            </div> 
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-5 text-left mb-3">
+                                        <a id="link" class="btn btn-primary" th:href="@{/Treinos}">Voltar</a>
+                                    </div>          
+                                    <div class="col-sm-7 text-right mb-3">
+                                        <input id="btn-excluir" type="submit" required class="btn btn-primary" value="Excluir">
+                                    </div>
+                                </div>
+                            </div>   
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </form> 
+        
+        <!--MODAL PARA CONFIRMAR OU CANCELAR EXCLUSÃO-->
+        <div class="modal fade" id="confirmModal" role="dialog">
+
+            <!--MODAL CASO TREINO TENHA SIDO ENCONTRADO-->
+            <div class="modal-dialog" role="document" th:if="${treino.nome != null}">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de exclusão</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        <p>Tem certeza que deseja excluir o treino <span th:text="${treino.nome}" style="color: rgb(139, 0, 0);">
+                            </span>?</p>
+                        <p class="mt-1">A ação não poderá ser revertida</p>
+                    </div>
+                    <!--RODAPÉ-->
+                    <!--Form para confirmar exclusão-->
+                    <form id="formExcluirConfirm" th:action="@{/ConfirmExcluirTreino}" method="post">
+                        <input type="hidden" id="id-funcionario-confirm" name="id_treino_exclusao" th:value="${treino.id}" class="form-control"/>
+                        <div class="modal-footer">
+                            <!--BOTÃO PARA CANCELAR-->
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <!--BOTÃO PARA ENVIO DO FORM-->
+                            <button id="btnExcluirConfirm" class="btn btn-primary" type="submit">Excluir</button>                  
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!--MODAL CASO TREINO NÃO TENHA SIDO ENCONTRADO-->
+            <div class="modal-dialog" role="document" th:unless="${treino.nome != null}">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Treino não encontrado</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        <p style="color: rgb(139, 0, 0);">O treino não foi encontrado</p>          
+                    </div>
+                    <!--RODAPÉ-->                             
+                    <div class="modal-footer">
+                        <a id="link" class="btn btn-primary" th:href="@{/ExcluirTreino}">Voltar</a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/TelasTreinosJs/ExcluirTreinoJs.js}"></script>
+    </body>
+</html>

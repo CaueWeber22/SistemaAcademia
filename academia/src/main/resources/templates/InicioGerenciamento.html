@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Tela inicial</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/InicioGerenciamentoCss.css}"/>         
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+
+                <!-- MENU LATERAL -->
+                <div id="barra-lateral" class="col-sm-3 text-center">
+                    <p id="barra-txt" class="h4 mt-5 ml-3">Sua saúde e corpo em primeiro lugar!</p>
+                    <div class="d-flex align-items-center justify-content-center" style="height: 50%;">
+                        <p id="bem-vindo" class="h2">Bem-vindo!</p>
+                    </div>
+                    <div class="logo text-center mx-5">
+                        <picture> 
+                            <source th:srcset="@{/images/logo_nav_red_menor.png}" media="(max-width: 800px)"> 
+                            <source class="mr-3" th:srcset="@{/images/logo_nav_red.png}"> 
+                            <img  id="logo" th:src="@{/images/logo_nav_red.png}" alt="logo" class="img-fluid"> 
+                        </picture>
+                    </div>
+                </div>
+
+                <!--CONTEÚDO DA TELA-->
+                <div id="content-div" class="col-sm-9 d-flex align-items-center">   
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-12 d-flex justify-content-center align-items-center">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class = "col-sm-12 mb-5 d-flex justify-content-center align-items-center">
+                                            <p class="h2">Opções de gerenciamento</p>
+                                        </div>
+                                        <div class="col-sm-12 mb-5 d-flex justify-content-center align-items-center"> 
+                                            <ul class="list-unstyled ">
+                                                <li><a id="link" class="mb-4 btn btn-primary" th:href="@{/Treinos}">Treinos</a></li>
+                                                <li><a id="link" class="mb-4 btn btn-primary" th:href="@{/Exercicios}">Exercícios</a></li>
+                                                <li><a id="link" class="mb-4 btn btn-primary" th:href="@{/Usuarios}">Usuários</a></li>
+                                                <li><a id="link" class="mb-4 btn btn-primary" th:href="@{/Funcionarios}">Funcionários</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>      

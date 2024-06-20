@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Alteração de funcionário</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasFuncionariosCss/AlterarFuncionarioCss.css}"/>         
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Alterar dados de um funcionário</p>
+                </div>
+            </div>
+        </div>
+
+        <!--INPUT PARA PASSAR TIPO DE ALTERAÇÃO PARA O JS-->
+        <input id="ShowTipoAlteracao" type="hidden" th:value="${tipoAlteracao}"/>
+
+        <!--CONTEÚDO DA PÁGINA-->
+        <div class="container teal-bg mt-4" style="margin-bottom: 10vh;">
+            <div class="row"> 
+
+                <!--FORM E DIVS PARA SELECIONAR USUÁRIO E TIPO DE ALTERÇÃO-->
+                <div id="div-select-func" class="col-sm-7"> 
+                    <form id="form-funcionario" th:action="@{AlterarFuncionario}" method="post">
+                        <div class="col-sm-8 mb-3">   
+
+                            <!--Digitar ID do funcionário-->
+                            <div class="mb-3">
+                                <label for="id-funcionario" class="form-label">ID do funcionário que terá seu status alterado:</label> 
+                                <input id="input-id-funcionario" required name="id_funcionario" class="form-control" type="number"> 
+                            </div>
+                            <!--Escolher qual será a alteração-->
+                            <div class="mb-3">           
+                                <input type="radio" id="ativar" name="opcoes" value="opAtivar">
+                                <label class="pr-4" for="ativar">Ativar funcionário</label>
+                            </div>
+                            <div class="mb-3">           
+                                <input type="radio" id="desativar" name="opcoes" value="opDesativar">
+                                <label for="desativar">Desativar funcionário</label><br> 
+                            </div>
+                            <!--Botões para cadastro e voltar-->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-7 mb-3">
+                                        <a id="link" class="btn btn-primary" th:href="@{Funcionarios}">Voltar</a>
+                                    </div>
+                                    <div class="col-sm-5 text-right mb-3">
+                                        <button id="btn-pesqusiar" type="submit" class="btn btn-primary btn-block">Pesquisar</button>
+                                    </div>
+                                </div>
+                            </div> 
+
+                        </div> 
+                    </form>
+                </div> 
+
+                <div class="col-sm-7"> 
+
+                    <!--DIVs E FORM PARA DESATIVAR FUNCIONÁRIO-->
+                    <form id="form-desativar" th:action="@{/DesativarFuncionario}" method="post">                    
+                        <div id="div-desativar" class="container esconder">
+                            <!--INPUT PARA PASSAR ID AO BACKEND-->
+                            <input type="hidden" required name="id_funcionario" th:value="${funcionario.id}">
+                            <div class="row">
+                                <div class="col-sm-12 mb-4">   
+                                    <div class="mb-3">
+                                        <p class="h5">Funcionário que será desativado: <span class="h5" th:text="${funcionario.nome}"></span>
+                                    </div>
+                                    <!--Campo para digitar data da demissão-->
+                                    <div class="mb-3">
+                                        <label for="data-demissao" class="form-label">Data que foi desativado:</label> 
+                                        <input id="data-demissao" required name="data_demissao" class="form-control" type="date">   
+                                       
+                                    </div>
+                                </div> 
+                            </div>
+                            <!--BOTÕES PARA ABRIR MODAL DE DESATIVAÇÃO E VOLTAR-->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-7 mb-3">
+                                        <a id="link" class="btn btn-primary" th:href="@{/AlterarFuncionario}">Voltar</a>
+                                    </div>
+                                    <div class="col-sm-5 text-right mb-3">
+                                        <button id="btn-modal-desativar" type="button" class="btn btn-primary btn-block">Desativar</button>
+                                    </div>
+                                </div>
+                            </div>          
+                        </div>  
+                    </form>
+
+                    <!--DIVs E FORM PARA ATIVAR FUNCIONÁRIO-->
+                    <form id="form-ativar" th:action="@{/AtivarFuncionario}" method="post"> 
+                        <div id="div-ativar" class="container esconder">
+                            <!--INPUT PARA PASSAR ID AO BACKEND-->
+                            <input type="hidden" required name="id_funcionario" th:value="${funcionario.id}">
+                            <div class="row">
+                                <div class="col-sm-12 mb-4">   
+                                    <div class="mb-3">
+                                        <p class="h5">Funcionário que será ativado: <span class="h5" th:text="${funcionario.nome}"></span>
+                                    </div>
+                                </div> 
+                            </div>
+                            <!--BOTÕES PARA ABRIR MODAL DE ATIVAÇÃO E VOLTAR-->
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-5 mb-3">
+                                        <a id="link" class="btn btn-primary" th:href="@{/AlterarFuncionario}">Voltar</a>
+                                    </div>
+                                    <div class="col-sm-4 mb-3">
+                                        <button id="btn-modal-ativar" type="button" class="btn btn-primary btn-block">Ativar</button>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div> 
+                    </form> 
+
+                    <!--DIV PARA DIZER QUE O FUNCIONÁRIO NÃO ENCONTRADO-->
+                    <div id="div-func-null" class="container esconder">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p class="h4">Funcionário não encontrado</p>
+                            </div>
+                            <div class="col-sm-8 mb-3">
+                                <a id="link" class="btn btn-primary" th:href="@{/AlterarFuncionario}">Voltar</a>
+                            </div>              
+                        </div>
+                    </div>
+                </div>  
+            </div> 
+        </div> 
+
+
+
+        <!--MODALS-->
+
+        <!--MODAL PARA DESATIVAR FUNCIONÁRIO OU CANCELAR-->
+        <div class="modal fade" id="desativar-modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de desativação de funcionário</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        Tem certeza que deseja desativar este funcionário?
+                    </div>
+                    <!--RODAPÉ-->
+                    <div class="modal-footer">
+                        <!--BOTÃO PARA CANCELAR CADASTRO-->
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <!--BOTÃO PARA ENVIO DO FORM-->
+                        <button id="btnDesativar" form="form-desativar" class="btn btn-primary" type="submit">Confirmar</button>                  
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <!--MODAL PARA ATIVAR FUNCIONÁRIO OU CANCELAR-->
+        <div class="modal fade" id="ativar-modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de ativação de funcionário</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        Tem certeza que deseja ativar este funcionário?
+
+                        Essa ação irá deletar a data de demissão ligada a ele (caso possua).
+                    </div>
+                    <!--RODAPÉ-->
+                    <div class="modal-footer">
+                        <!--BOTÃO PARA CANCELAR CADASTRO-->
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <!--BOTÃO PARA ENVIO DO FORM-->
+                        <button id="btnAtivar" form="form-ativar" class="btn btn-primary" type="submit">Confirmar</button>                  
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/TelasFuncionariosJs/AlterarFuncionarioJs.js}"></script>        
+    </body>
+</html>

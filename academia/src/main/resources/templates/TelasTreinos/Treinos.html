@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Treinos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasTreinosCss/TreinosCss.css}"/>    
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Treinos</p>
+                </div>
+            </div>
+        </div>
+        
+        <!--PARTE DE CIMA DA TABELA-->
+        <div class=" mt-4 container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="container">                  
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <a id="link" class="botao" th:href="@{/ExerciciosTreino}">Visualizar/alterar exercícios de um treino</a>
+                            </div>                          
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>  
+
+        <!--TABELA-->
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col table_responsive">
+                        <table id="tabela-treinos" class="table table-striped table-bordered">
+                            <thead>
+                                <tr style="color: rgb(139,0,0)">
+                                    <th>ID</th>
+                                    <th>Nome do treino</th>
+                                    <th>Numero de divisões</th>
+                                    <th>Descrição</th>  
+                                    <th>Descrição dos dias</th>      
+                                </tr>
+                            </thead>
+                            <tbody id="corpo_tabela">                          
+                                <tr th:each="treino : ${treinos}" class="usuario-item" data-id="${treino.id}">
+                                    <td th:text="${treino.id}"></td>
+                                    <td th:text="${treino.nome}"></td>
+                                    <td th:text="${treino.numero_divisoes}"></td>
+                                    <td th:text="${treino.descricao}"></td>
+                                    <td th:text="${treino.descricao_dias}"></td>
+                                </tr>               
+                            </tbody>  
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--PARTE DE BAIXO DA TABELA-->
+        <div class=" mt-2 container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="container">                  
+                        <div class="row">
+                            <div class="class-sm-4 mt-4">
+                                <ul id="lista" class="list-unstyled">
+                                    <li><a id="link" class="botao pl-3 pr-3 p-2" th:href="@{/TelaInicial}">Voltar</a></li>
+                                </ul>
+                            </div> 
+                            <div class="class-sm-8 ml-auto mt-4">
+                                <ul id="lista" class="list-unstyled">
+                                    <li><a id="link" class="botao pl-3 pr-3 p-2" th:href="@{/ExcluirTreino}" style="color: red">Excluir treino</a></li>
+                                    <li><a id="link" class="botao pl-3 pr-3 p-2" th:href="@{/AlterarTreino}">Alterar dados de treino</a></li>
+                                    <li><a id="link" class="botao" th:href="@{/CadastroTreino}">Cadastrar novo treino</a></li>
+                                </ul>
+                            </div>         
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/TelasTreinosJs/TreinosJs.js}"></script>
+
+    </body>
+</html>

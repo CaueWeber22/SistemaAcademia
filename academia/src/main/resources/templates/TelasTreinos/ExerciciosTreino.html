@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Exercícios de um treino</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasTreinosCss/ExerciciosTreinoCss.css}"/>    
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Exercícios de um treino</p>
+                </div>
+            </div>
+        </div>
+
+        <!--FORM DE ESCOLHA DO TREINO-->
+        <form id="form-pesquisar" method="get" th:action="@{/ExerciciosTreino/Treino}">
+            <div class="container mt-3">
+                <div class="row">  
+                    <div class="col-sm-6"> 
+                        <div class="mb-3"> 
+                            <label for="treino-pesquisar" class="form-label">Qual treino deseja visualizar?</label> 
+                            <select id="treino-pesquisar" name="id_treino" class="form-control" style="max-width: 40vw">
+                                <option value="">Selecione um treino</option>
+                                <option th:each="treino : ${treinos}"
+                                        th:value="${treino.id}"
+                                        th:text="${treino.nome}"></option>
+                            </select>
+                        </div> 
+                        <!--BOTÕES PARA VOLTAR E ENVIAR FORM-->
+
+                        <div class="row">
+                            <div class="col-sm-5 text-left mb-3">
+                                <a id="link" class="btn btn-primary" th:href="@{/Treinos}">Voltar</a>
+                            </div>          
+                            <div class="col-sm-6 text-right mb-3">
+                                <button id="btn-pesquisar" type="submit" class="pl-3 pr-3 btn btn-primary">Pesqusiar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </form> 
+
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <script th:src="@{/js/TelasTreinosJs/ExerciciosTreinoJs.js}"></script>
+    </body>
+</html>

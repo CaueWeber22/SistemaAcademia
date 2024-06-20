@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Alterar dados de usuário</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasUsuarioCss/AlterarCss.css}"/>    
+         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">    
+       
+
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Alterar dados de treino/plano de usuário</p>
+                </div>
+            </div>
+        </div>
+        
+        <form id="formAlterar" th:action="@{/Alterar}" th:object="${usuario}" method="post">  
+            <input type="hidden" th:field="*{id_carteirinha}">
+            <input type="hidden" th:field="*{cpf}">
+            <input type="hidden" th:field="*{nome}">
+            <input type="hidden" th:field="*{data_nascimento}">
+            
+            <div class="container teal-bg mt-3" style="margin-bottom: 10vh;">
+                <div class="row">                    
+                    <!--Div para alteração de dados
+                        Só aparecerá se usuário for =! null-->
+                    <div id="divAlteracao" class="col-sm-8" th:if="${usuario.nome != null}"> 
+                        <div>
+                            <p id="txt" class="h3">Substitua os dados por novos dados para alteração:</p>                            
+                            <hr>
+                        </div>
+                        <div class="mt-4">
+                            <p id="txt" class="h4">Usuário <span th:text="*{nome}" style="color: rgb(139, 0, 0);"></span></p>                            
+                        </div>
+                        <div class="mt-4">                    
+                            <!--Campo para escolher treino-->
+                            <div class="mb-3">
+                                <label for="treino-id" class="form-label">Qual o treino? (não obrigatório)</label> 
+                                <select id="treino-id" class="form-control" th:field="*{treino_id}">
+                                    <option value="">Selecione uma opção</option>
+                                    <option th:each="treino : ${treinos}"
+                                            th:value="${treino.id}"
+                                            th:text="${treino.nome}"/>                  
+                                    </option>
+                                </select>
+                            </div>
+                            <!--Campo para escolher plano-->
+                            <div class="row mb-4"> 
+                                <div class="col-sm-7">
+                                    <label for="plano-id" class="form-label">Qual o tempo do plano?</label> 
+                                    <select id="plano-id" class="form-control" th:field="*{plano_id}">
+                                        <option value="0">Selecione uma opção</option>
+                                        <option value="1">Mensal</option>
+                                        <option value="2">Trimestral</option>
+                                        <option value="3">Semestral</option>
+                                        <option value="4">Anual</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-5">
+                                    <label for="ativo" class="form-label">O plano está ativo?</label>      
+                                    <select id="ativo" class="form-control" th:field="*{ativo}">
+                                        <option value="false">Não</option>
+                                        <option value="true">Sim</option>
+                                    </select> 
+                                </div>
+
+                            </div> 
+                        </div>
+                        <!--BOTÃO PARA ALTERAÇÃO E VOLTAR-->
+                        
+                            <div class="row">
+                                <div class="text-left col-sm-5 mb-3">
+                                    <a id="link" class="btn btn-primary" th:href="@{/AlterarUsuario}">Voltar</a>
+                                </div>           
+                                <div class="col-sm-7 mb-3">
+                                    <button id="abrirModal" type="button" class="btn btn-primary btn-block">Alterar</button>
+                                </div>                                                  
+                            </div>
+                         
+                    </div>  
+                    
+                    <div id="divUsuarioNull" class="col-sm-8" th:unless="${usuario.nome != null}">
+                        <p class="mb-3 mt-2 h3" th:text="${mensagem}"></p>
+                        <div class="text-left mb-3">
+                                    <a id="link" class="btn btn-primary" th:href="@{/AlterarUsuario}">Voltar</a>
+                        </div>  
+                    </div>   
+                </div>  
+            </div>
+        </form> 
+        
+        
+         <!--MODAL PARA ALTERAR DADOS OU CANCELAR-->
+        <div class="modal fade" id="confirmModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de alteração de dados do usuário</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        Tem certeza que deseja alterar os dados deste usuário?
+                        
+                        A ação não pode ser desfeita
+                    </div>
+                    <!--RODAPÉ-->
+                    <div class="modal-footer">
+                        <!--BOTÃO PARA CANCELAR ALTERAÇÃO-->
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <!--BOTÃO PARA ENVIO DO FORM-->
+                        <button id="btnAlterar" form="formAlterar" class="btn btn-primary" type="submit">Confirmar</button>                  
+                    </div>
+                </div>
+            </div>
+        </div>       
+
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <script th:src="@{/js/TelasUsuarioJs/AlterarJs.js}"></script>
+       
+    </body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Remover exercício</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasTreinosCss/RemoverExercicioCss.css}"/>    
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Remover exercício do treino </p>
+                </div>
+            </div>
+        </div>
+
+        <!--CONTEÚDO DA PÁGINA-->
+        <div class="container mt-3" style="margin-bottom: 10vh;">
+            <div class="row"> 
+                <!--FORM PARA REMOVER EXERCÍCIO-->
+                <div class="col-sm-12">
+                    <form id="form-remover" method="post" th:action="@{/ExerciciosTreino/Treino/Remover}">
+                        <!--INTPUT PARA RETORNAR ID DO TREINO-->
+                        <input id="id_treino" name="id_treino" type="hidden" th:value="${treino.id}"/>
+                        
+                        <div class="col-sm-7">   
+                            <!--Campo para escolher o exercício-->
+                            <div class="mb-3">
+                                <label style="font-size: 1rem" for="exercicio-id" class="form-label">Qual exercício será removido?</label> 
+                                <select class="form-control" id="exercicio-id" name="id_exercicio">
+                                    <option value="">Selecione uma opção</option>
+                                    <option th:each="exercicio : ${exercicios}"
+                                            th:value="${exercicio.exercicio.id}"
+                                            th:text="${exercicio.exercicio.nome}"></option>                 
+                                </select>
+                            </div>
+                            
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4 mb-3">
+                                        <a id="link" class="btn btn-primary btn-block"  th:href="@{/ExerciciosTreino/Treino(id_treino=${treino.id})}">Voltar</a>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-5 mb-3">
+                                        <button id="btn-remover" type="button" class="btn btn-primary btn-block">Remover</button>
+                                    </div>
+                                </div>
+                            </div>   
+                        </div>
+                    </form>
+                </div> 
+            </div>                  
+        </div>  
+        
+        <!--MODAL PARA REMOVER EXERCÍCIO DO TREINO OU CANCELAR-->
+        <div class="modal fade" id="confirmModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de remoção de exercício do treino</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        Tem certeza que deseja remover este exercício do treino?
+                    </div>
+                    <!--RODAPÉ-->
+                    <div class="modal-footer">
+                        <!--BOTÃO PARA CANCELAR ALTERAÇÃO-->
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <!--BOTÃO PARA ENVIO DO FORM-->
+                        <button id="btnRemover" form="form-remover" class="btn btn-primary" type="submit">Confirmar</button>                  
+                    </div>
+                </div>
+            </div>
+        </div>  
+
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <script th:src="@{/js/TelasTreinosJs/RemoverExercicioJs.js}"></script>
+
+
+    </body>
+</html>

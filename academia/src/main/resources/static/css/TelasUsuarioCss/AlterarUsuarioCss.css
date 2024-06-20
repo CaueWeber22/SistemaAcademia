@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body{
+    background-color: rgb(245,245,245);;
+}
+
+/*TOPO*/
+#txt-topo{
+    font-family: "Roboto";
+    font-size: 200%;
+    font-weight: bold;
+}
+
+/*FORM*/
+  span{
+    font-size:80%;
+  }
+  
+  #link{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(255, 255, 255); 
+    color: #000000; 
+    text-decoration: none; 
+    border: 1px solid black; 
+    border-radius: 10px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    cursor: pointer; 
+  }
+  #link:hover {
+    background-color: #000000; 
+    color: rgb(255, 255, 255);
+    text-decoration: none; 
+  }
+  #link:active {
+    background-color: #ffffff; 
+    color: black;
+    text-decoration: none; 
+  }
+  
+
+    

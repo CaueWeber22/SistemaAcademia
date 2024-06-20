@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Cadastro de funcionário</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasFuncionariosCss/CadastrarFuncionarioCss.css}"/>         
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Cadastro de funcionário</p>
+                </div>
+            </div>
+        </div>
+
+        <!--FORM DE CADASTRO-->
+        <form id="form-cadastro" th:action="@{CadastrarFuncionario}" th:object="${funcionario}" method="post">
+            <div class="container teal-bg mt-3" style="margin-bottom: 10vh;">
+                <p id="txt" class="h5">Insira os dados do novo funcionário:</p>
+                <hr>
+                <div class="row"> 
+                    <div class="col-sm-7">   
+                        <!--Campo para digitar nome do funcionário-->
+                        <div class="mb-3"> 
+                            <label for="nome" class="form-label">Nome:</label> 
+                            <input id="nome" required name="nome" class="form-control" 
+                                   type="text" th:field="*{nome}"  placeholder="Digite o nome"/> 
+                            <span 
+                                id="spanNome" class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+                        </div> 
+
+                        <!--Campo para digitar CPF do funcionário-->
+                        <div class="mb-3"> 
+                            <label for="cpf" class="form-label">CPF:</label> 
+                            <input id="cpf" required name="cpf" class="form-control" type="text"
+                                   th:field="*{cpf}"  placeholder="Digite o cpf"/>
+                            <span 
+                                id="spanCpf" class="text-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
+                        </div>
+
+                        <!--Campo para digitar a data de nascimento do funcionário-->
+                        <div class="mb-3"> 
+                            <label for="data-nasc" class="form-label">Data de nascimento:</label> 
+                            <input id="data-nasc" required name="data-nasc" class="form-control" type="date"
+                                   th:field="*{data_nascimento}"/>
+                            <span 
+                                id="spanDataNasc" class="text-danger" th:if="${#fields.hasErrors('data_nascimento')}" 
+                                th:errors="*{data_nascimento}"></span>
+                        </div>                                     
+
+
+                        <!--Campo para escolher o cargo do funcionário-->
+                        <div class="mb-3">
+                            <label for="cargo-id" class="form-label">Qual cargo ocupará?</label> 
+                            <select id="cargo-id" class="form-control" th:field="*{cargo}">
+                                <option value="">Selecione uma opção</option>
+                                <option th:each="cargo : ${cargos}"
+                                        th:value="${cargo.id}"
+                                        th:text="${cargo.cargo}"></option>                 
+                            </select>
+                        </div>
+
+                        <!--Campo para digitar a data de admissão do funcionário-->
+                        <div class="mb-4"> 
+                            <label for="data-admissao" class="form-label">Data de admissao:</label> 
+                            <input id="data-admissao" required name="data-admissao" class="form-control" type="date"
+                                   th:field="*{data_admissao}"  placeholder="Digite a data de admissão"/>
+                            <span 
+                                id="spanDataAdmissao" class="text-danger" th:if="${#fields.hasErrors('data_admissao')}" 
+                                th:errors="*{data_admissao}"></span>
+                        </div>
+
+                        <input type="hidden" th:field="*{ativo}" th:value="true"/>
+
+                        <!--Botões para cadastro e voltar-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-7 mb-3">
+                                    <a id="link" class="btn btn-primary" th:href="@{Funcionarios}">Voltar</a>
+                                </div>
+                                <div class="col-sm-5 text-left mb-3">
+                                    <button id="abrirModal" type="button" class="pr-5 pl-5 btn btn-primary">Cadastrar</button>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>  
+                </div> 
+            </div>           
+        </form>
+        
+        <!--MODAL PARA CADASTRAR OU CANCELAR-->
+        <div class="modal fade" id="confirmModal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <!--CABEÇALHO-->
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação de cadastro de funcionário</h5>
+                        <button type="button" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <!--CORPO-->
+                    <div class="modal-body">
+                        Tem certeza que deseja cadastrar este funcionário?
+                    </div>
+                    <!--RODAPÉ-->
+                    <div class="modal-footer">
+                        <!--BOTÃO PARA CANCELAR CADASTRO-->
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <!--BOTÃO PARA ENVIO DO FORM-->
+                        <button id="btnCadastrar" form="form-cadastro" class="btn btn-primary" type="submit">Confirmar</button>                  
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/TelasFuncionariosJs/CadastrarFuncionarioJs.js}"></script>
+    </body>
+</html>

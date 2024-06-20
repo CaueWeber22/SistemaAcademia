@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Adicionar exercício</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/> 
+        <link rel="stylesheet" th:href="@{/css/TelasTreinosCss/AdicionarExercicioCss.css}"/>    
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">          
+        <!-- fontes -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    </head>
+
+    <body>
+        <!--TOPO DA PÁGINA-->
+        <header th:insert="~{TopoPagina.html :: nav}"></header>
+
+        <div class="container">
+            <div class="row">
+                <div class="topo mt-3 col-sm-12 d-flex justify-content-center">
+                    <p id="txt-topo" class="h3">Adicionar exercício ao treino </p>
+                </div>
+            </div>
+        </div>
+
+        <!--CONTEÚDO DA PÁGINA-->
+        <div class="container mt-3" style="margin-bottom: 10vh;">
+            <div class="row"> 
+                <!--FORM PARA ADICIONAR EXERCÍCIO-->
+                <div class="col-sm-12">
+                    <form id="form-adicionar" th:object="${exerciciosTreino}" method="post" th:action="@{/ExerciciosTreino/Treino/Adicionar}">
+                        <!--INTPUT PARA RETORNAR ID DO TREINO-->
+                        <input id="id_treino" name="id_treino" type="hidden" th:field="*{treino.id}"/>
+                        <p id="txt" class="h5">Dados do exercício</p>
+                        <hr>
+                        <div class="col-sm-7">   
+                            <!--Campo p ara escolher o exercício-->
+                            <div class="mb-3">
+                                <label for="exercicio-id" class="form-label">Qual exercício será adicionado?</label> 
+                                <select class="form-control" id="exercicio-id" th:field="*{exercicio.id}">
+                                    <option value="">Selecione uma opção</option>
+                                    <option th:each="exercicio : ${exercicios}"
+                                            th:value="${exercicio.id}"
+                                            th:text="${exercicio.nome}"></option>                 
+                                </select>
+                            </div>
+                            <div class="mb-3"> 
+                                <label for="divisao" class="form-label">Divisão que o exercício pertence:</label> 
+                                <input id="divisao" th:field="*{divisao}" required class="form-control" type="text">
+                                <span>Exemplo: A, B, C...</span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="repeticoes" class="form-label">Número de repetições:</label> 
+                                <input id="repeticoes" th:field="*{repeticoes}" required class="form-control" type="number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="series" class="form-label">Número de séries:</label> 
+                                <input id="series" th:field="*{series}" required class="form-control" type="number">
+                            </div>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm-4 mb-3">
+                                        <a id="link" class="btn btn-primary btn-block" th:href="@{/ExerciciosTreino/Treino(id_treino=${treino.id})}">Voltar</a>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-5 mb-3">
+                                        <button id="btn-adicionar" type="submit" class="btn btn-primary btn-block">Adicionar</button>
+                                    </div>
+                                </div>
+                            </div>   
+                        </div>
+                    </form>
+                </div> 
+            </div>                  
+        </div>  
+
+        <script th:src="@{/jquery.js}"></script> 
+        <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+        <script th:src="@{/js/TelasTreinosJs/AdicionarExercicioJs.js}"></script>
+
+
+    </body>
+</html>

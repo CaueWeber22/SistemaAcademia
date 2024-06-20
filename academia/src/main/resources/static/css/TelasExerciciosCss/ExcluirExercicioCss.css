@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body{
+    background-color: rgb(245,245,245);;
+}
+
+.esconder{
+    display: none;
+}
+
+/*TOPO*/
+#txt-topo{
+    font-family: "Roboto";
+    font-size: 200%;
+    font-weight: bold;
+}
+/*FORM*/
+  #link{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(255, 255, 255); 
+    color: #000000; 
+    text-decoration: none; 
+    border: 1px solid black; 
+    border-radius: 10px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    cursor: pointer; 
+  }
+  #link:hover {
+    background-color: #000000; 
+    color: rgb(255, 255, 255);
+    text-decoration: none; 
+  }
+  #link:active {
+    background-color: #ffffff; 
+    color: black;
+    text-decoration: none; 
+  }
+    
+  /*BOTÃO EXCLUIR*/
+  #btn-excluir{
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(139, 0, 0);
+    box-shadow: 0 0 0 0.1rem rgb(139, 0, 0);
+    color:rgb(139, 0, 0);
+  }
+  
+  #btn-excluir:hover{
+    background-color: rgb(255, 255, 255);
+    color:rgb(139, 0, 0);
+    border-color: rgb(139, 0, 0);
+    box-shadow: 0 0 0 0.2rem rgb(139, 0, 0);
+  }
+  #btn-excluir:focus, #btn-excluir.focus {
+    box-shadow: 0 0 0 0.2rem rgb(0, 0, 0);
+  }
+      
+  #btn-excluir.disabled{
+    box-shadow: 0 0 0 0.2rem rgb(0, 0, 0);
+  
+  }
+  #btn-excluir:not(:disabled):not(.disabled):active,#btn-excluir:not(:disabled):not(.disabled).active,
+  .show > #btn-excluir.dropdown-toggle {
+  color: #fff;
+  background-color: rgb(139, 0, 0);
+  border-color: rgb(139, 0, 0);
+  }
+  
+  #btn-excluir:not(:disabled):not(.disabled):active:focus, #btn-excluir:not(:disabled):not(.disabled).active:focus,
+  .show > #btn-login.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgb(139, 0, 0);
+  }
+   
