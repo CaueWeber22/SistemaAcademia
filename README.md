@@ -43,7 +43,7 @@ Visualização de Usuários: Exibe uma lista de todos os usuários cadastrados n
 Edição de Usuários: Permite a atualização dos dados dos usuários existentes. As alterações são validadas antes de serem salvas no banco de dados.
 
 Exclusão de Usuários: Facilita a remoção de usuários do sistema, garantindo que todos os dados relacionados sejam corretamente atualizados no banco de dados.    
-
+<br/>
 
 **Gerenciamento de Funcionários**
 
@@ -54,7 +54,7 @@ Exclusão de Usuários: Facilita a remoção de usuários do sistema, garantindo
 • Edição de Funcionários: Permite a modificação dos dados dos funcionários. As mudanças são validadas e posteriormente salvas no banco de dados.
 
 • Exclusão de Funcionários: Realiza a exclusão de funcionários, garantindo que todas as referências e dados associados sejam corretamente gerenciados no banco de dados.    
-
+<br/>
 
 **Gerenciamento de Treinos**
 
@@ -65,6 +65,7 @@ Exclusão de Usuários: Facilita a remoção de usuários do sistema, garantindo
 • Edição de Treinos: Permite a atualização das informações dos treinos. As alterações são validadas e salvas no banco de dados.
 
 • Exclusão de Treinos: Facilita a remoção de treinos, garantindo que o banco de dados seja atualizado corretamente e que todas as referências sejam mantidas.    
+<br/>
 
 **Gerenciamento de Exercícios**
 
